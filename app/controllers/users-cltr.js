@@ -47,4 +47,14 @@ usersCltr.login = async (req, res) => {
     }
 }
 
+usersCltr.account = async (req, res) => {
+    try  {
+        const user = await User.findById(req.userId) 
+        res.json(user)
+    } catch(err) {
+        console.log(err) 
+        res.status(500).json({ error: "something went wrong"})
+    }
+}
+
 export default usersCltr

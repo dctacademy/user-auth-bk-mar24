@@ -4,6 +4,7 @@ import { checkSchema } from 'express-validator'
 dotenv.config() 
 import configureDB from './config/db.js'
 import usersCltr from './app/controllers/users-cltr.js'
+import authenticateUser from './app/middlewares/authenticate.js'
 import { userRegisterSchema, userLoginSchema } from './app/validators/user-validation-schema.js'
 const port = process.env.PORT || 3050
 const app = express() 
@@ -13,6 +14,8 @@ app.use(express.json())
 
 app.post('/api/users/register', checkSchema(userRegisterSchema), usersCltr.register)
 app.post('/api/users/login', checkSchema(userLoginSchema), usersCltr.login)
+app.get('/api/users/account', authenticateUser, usersCltr.account)
+
 
 
 // axios.post(url, formData, options)
